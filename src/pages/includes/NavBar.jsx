@@ -125,13 +125,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaBars, FaTimes, FaUserCircle, FaCaretDown } from 'react-icons/fa';
 import axios from 'axios';
 import { REACT_APP_API_PORT } from '../../Api';
 import ConfirmLogoutModal from '../../components/ConfirmLogoutModal';
 
 const Navbar = () => {
+    const navigate = useNavigate()
     const [data, setData] = useState([]);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -172,13 +173,16 @@ const Navbar = () => {
     const confirmLogout = () => {
         localStorage.removeItem("admin");
         localStorage.removeItem("token");
-        window.location.href = '/login'; // Redirect to login page
+        setIsModalOpen(false)
+        navigate("/login")
+        // window.location.href = '/login'; // Redirect to login page
+        window.reload()
     };
 
     return (
         <header className="bg-primary text-white py-4 shadow-md z-10">
             <nav className="container mx-auto flex justify-between items-center">
-                <h1 className="text-2xl font-bold">E-Shop</h1>
+                <h1 className="text-2xl font-bold cursor-pointer" onClick={()=>navigate("/")}>E-Shop</h1>
                 <div className="flex items-center lg:hidden">
                 {
                     (admin) &&
@@ -191,8 +195,8 @@ const Navbar = () => {
                         {isProfileOpen && (
                             <div className="absolute right-0 bg-white text-black mt-2 rounded shadow-lg">
                                 <NavLink to="/orders" className="block px-4 py-2 hover:bg-gray-200">Orders</NavLink>
-                                <NavLink to="/settings" className="block px-4 py-2 hover:bg-gray-200">Settings</NavLink>
-                                <NavLink to="#" onClick={handleLogout} className="block px-4 py-2 hover:bg-gray-200">Logout</NavLink>
+                                <NavLink to="/payments" className="block px-4 py-2 hover:bg-gray-200">Payments</NavLink>
+                                <NavLink to="#"  onClick={handleLogout} className="block px-4 py-2 hover:bg-gray-200">Logout</NavLink>
                             </div>
                         )}
                     </div>
@@ -239,7 +243,7 @@ const Navbar = () => {
                             {isProfileOpen && (
                                 <div className="absolute right-0 bg-white text-black mt-2 rounded shadow-lg">
                                     <NavLink to="/orders" className="block px-4 py-2 hover:bg-gray-200">Orders</NavLink>
-                                    <NavLink to="/settings" className="block px-4 py-2 hover:bg-gray-200">Settings</NavLink>
+                                    <NavLink to="/payments" className="block px-4 py-2 hover:bg-gray-200">Payments</NavLink>
                                     <NavLink to="#" onClick={handleLogout} className="block px-4 py-2 hover:bg-gray-200">Logout</NavLink>
                                 </div>
                             )}

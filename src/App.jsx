@@ -16,6 +16,11 @@ import SignUp from './pages/auth/SignUp';
 import UserEmailVerification from './pages/auth/UserEmailVerification';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
+import PrivateComponent from './components/PrivateComponent';
+import OrderList from './pages/OrderList';
+import OrderView from './pages/OrderView';
+import PaymentList from './pages/PaymentList';
+import PaymentView from './pages/PaymentView';
 
 function App() {
   
@@ -35,7 +40,16 @@ function App() {
         <Route path='/about-us' element={<AboutUs/>}/>       
         <Route path='/contact-us' element={<ContactUs/>}/>       
         <Route path='/cart' element={<Cart/>}/>       
-        <Route path='/checkout' element={<Checkout/>}/>       
+        {/* authenticated routes  */}
+        <Route element={<PrivateComponent/>}> 
+          <Route path='/checkout' element={<Checkout/>}/>  
+          <Route path='/orders' element={<OrderList/>}/>  
+          <Route path='/order-view/:id' element={<OrderView/>}/>  
+          <Route path='/payments' element={<PaymentList/>}/>  
+          <Route path='/payment-view/:id' element={<PaymentView/>}/>  
+
+        
+        </Route>
      </Routes>
 
     <Footer/>

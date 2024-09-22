@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { CartSlice } from "../components/store/features/CartSlice";
 import ApiLoader from "../components/ApiLoader";
+import { REACT_APP_API_PORT } from "../Api";
 
 export default function EcomUserWalletCheckout() {
   const navigate = useNavigate() 
@@ -47,7 +48,7 @@ export default function EcomUserWalletCheckout() {
       setMessage("Payment Status" + paymentIntent.status)
       try{
         let orderId = localStorage.getItem("order_id")
-        const res = await axios.post("http://localhost:5000/backend/api/stripe/generate-payment",
+        const res = await axios.post(`${REACT_APP_API_PORT}api/stripe/generate-payment`,
           {paymentIntentId :paymentIntent.id,orderId:orderId },
         {
           headers: {
